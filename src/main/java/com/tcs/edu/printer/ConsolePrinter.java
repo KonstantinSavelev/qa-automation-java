@@ -12,7 +12,6 @@ public class ConsolePrinter {
      * @param message text string
      */
     public static void print(String message) {
-
         System.out.println(message);
     }
 }
