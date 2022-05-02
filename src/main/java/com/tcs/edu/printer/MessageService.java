@@ -34,15 +34,13 @@ public class MessageService {
      */
     public static void print(Severity severity, MessageOrder order, String... messages) {
         if (order == MessageOrder.ASC) {
-            for (int counter = messages.length - 1; counter >= 0; counter--)
-                if (messages[counter] != null) {
-                    System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                }
+            for (int counter = messages.length - 1; counter >= 0; counter--) {
+                print(severity, messages[counter]);
+            }
         } else if (order == MessageOrder.DESC)
-            for (int counter = 0; counter <= messages.length - 1; counter++)
-                if (messages[counter] != null) {
-                    System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                }
+            for (int counter = 0; counter <= messages.length - 1; counter++) {
+                print(severity, messages[counter]);
+            }
     }
 
     /**
@@ -55,32 +53,17 @@ public class MessageService {
      */
     public static void print(Severity severity, MessageOrder order, Doubling doubling, String... messages) {
         String[] printMessages = new String[messages.length];
-
-        if (order == MessageOrder.ASC) {
-            for (int counter = messages.length - 1; counter >= 0; counter--)
-                if (messages[counter] != null) {
-                    if (doubling == Doubling.DISTINCT) {
-                        if (!checkPrintMessage(messages[counter], printMessages)) {
-                            System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                            printMessages[counter] = messages[counter];
-                        }
-                    } else {
-                        System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                    }
+        System.out.println(order);
+        for (int counter = 0; counter <= messages.length - 1; counter++) {
+            if (doubling == Doubling.DISTINCT) {
+                if (!checkPrintMessage(messages[counter], printMessages)) {
+                    print(severity, order, messages[counter]);
+                    printMessages[counter] = messages[counter];
                 }
-
-        } else if (order == MessageOrder.DESC)
-            for (int counter = 0; counter <= messages.length - 1; counter++)
-                if (messages[counter] != null) {
-                    if (doubling == Doubling.DISTINCT) {
-                        if (!checkPrintMessage(messages[counter], printMessages)) {
-                            System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                            printMessages[counter] = messages[counter];
-                        }
-                    } else {
-                        System.out.println(TimestampMessageDecorator.decorate(messages[counter] + SeverityDecorator.mapSeverity(severity)));
-                    }
-                }
+            } else {
+                print(severity, order, messages[counter]);
+            }
+        }
     }
 
 
