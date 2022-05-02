@@ -52,16 +52,20 @@ public class MessageService {
      * @param messages vararg, text massage
      */
     public static void print(Severity severity, MessageOrder order, Doubling doubling, String... messages) {
+
         String[] printMessages = new String[messages.length];
         System.out.println(order);
         for (int counter = 0; counter <= messages.length - 1; counter++) {
             if (doubling == Doubling.DISTINCT) {
                 if (!checkPrintMessage(messages[counter], printMessages)) {
-                    print(severity, order, messages[counter]);
                     printMessages[counter] = messages[counter];
+                }
+                if (counter == messages.length - 1) {
+                    print(severity, order, printMessages);
                 }
             } else {
                 print(severity, order, messages[counter]);
+
             }
         }
     }
