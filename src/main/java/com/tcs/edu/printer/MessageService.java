@@ -22,14 +22,9 @@ public class MessageService {
      */
     public static void print(Message... messages) {
         for (Message current : messages) {
-            if (current.getBody() != null) {
+            if (current != null && current.getBody() != null) {
                 System.out.println(TimestampMessageDecorator.decorate(current.getBody() + SeverityDecorator.mapSeverity(current.getSeverity())));
-            } else if (current.getBodies() != null) {
-                for (int counter = 0; counter <= current.getBodies().length - 1; counter++) {
-                    System.out.println(TimestampMessageDecorator.decorate(current.getBodies()[counter] + SeverityDecorator.mapSeverity(current.getSeverity())));
-                }
             }
-
         }
     }
 
@@ -42,23 +37,11 @@ public class MessageService {
     public static void print(MessageOrder order, Message... messages) {
         if (order == MessageOrder.ASC) {
             for (int counter = messages.length - 1; counter >= 0; counter--) {
-                if (messages[counter].getBody() != null) {
-                    print(messages[counter]);
-                } else if (messages[counter].getBodies() != null) {
-                    for (int counterBody = messages[counter].getBodies().length - 1; counterBody >= 0; counterBody--) {
-                        print(new Message(messages[counter].getSeverity(), messages[counter].getBodies()[counterBody]));
-                    }
-                }
+                print(messages[counter]);
             }
         } else if (order == MessageOrder.DESC)
             for (int counter = 0; counter <= messages.length - 1; counter++) {
-                if (messages[counter].getBody() != null) {
-                    print(messages[counter]);
-                } else if (messages[counter].getBodies() != null) {
-                    for (int counterBody = 0; counterBody <= messages[counter].getBodies().length - 1; counterBody++) {
-                        print(new Message(messages[counter].getSeverity(), messages[counter].getBodies()[counterBody]));
-                    }
-                }
+                print(messages[counter]);
             }
     }
 
@@ -70,18 +53,19 @@ public class MessageService {
      * @param messages DTO, message and severity
      */
     public static void print(MessageOrder order, Doubling doubling, Message... messages) {
-        String[] printMessages = new String[messages.length];
-        for (int counter = 0; counter <= messages.length - 1; counter++) {
-            if (doubling == Doubling.DISTINCT) {
+        Message[] printMessages = new Message[messages.length];
+
+        if (doubling == Doubling.DISTINCT) {
+            for (int counter = 0; counter <= messages.length - 1; counter++) {
                 if (!checkPrintMessage(messages[counter].getBody(), printMessages)) {
-                    printMessages[counter] = messages[counter].getBody();
+                    printMessages[counter] = new Message(messages[counter].getSeverity(), messages[counter].getBody());
                 }
                 if (counter == messages.length - 1) {
-                    print(order, new Message(messages[counter].getSeverity(), printMessages));
+                    print(order, printMessages);
                 }
-            } else {
-                print(order, messages[counter]);
             }
+        } else {
+            print(order, messages);
         }
     }
 
@@ -93,9 +77,9 @@ public class MessageService {
      * @param messages       - array of printed messages
      * @return boolean
      */
-    private static boolean checkPrintMessage(String checkedMassage, String[] messages) {
-        for (String current : messages) {
-            if (Objects.equals(current, checkedMassage)) {
+    private static boolean checkPrintMessage(String checkedMassage, Message[] messages) {
+        for (Message message : messages) {
+            if (message != null && Objects.equals(message.getBody(), checkedMassage)) {
                 return true;
             }
         }
