@@ -16,8 +16,7 @@ public class ConsolePrinter extends ValidatedService implements Printer {
      * @param message DTO, message and severity
      */
     public void print(Message message) {
-        if (isArgsValid(message)) {
-            System.out.println(timestamp.massageDecorator(message.getBody() + severity.massageDecorator(message.getSeverity())));
-        }
+        if (super.isArgsValid(message)) return;
+        System.out.println(timestamp.massageDecorator(message.getBody() + severity.massageDecorator(message.getSeverity())));
     }
 }
