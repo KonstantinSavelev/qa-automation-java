@@ -7,7 +7,7 @@ import java.time.Instant;
  *
  * @author k.s.savelev
  */
-public class TimestampMessageDecorator implements decoratorInterface {
+public class Decorator implements decoratorInterface {
 
     static Integer PAGE_SIZE = 2;
     static Integer messageCount = 0;
@@ -27,7 +27,22 @@ public class TimestampMessageDecorator implements decoratorInterface {
             return decoratedMessage;
     }
 
+    /**
+     * map string severity level
+     *
+     * @param severity - enum, type severity
+     * @return String - level
+     */
     public String massageDecorator(Severity severity) {
-        return null;
+        switch (severity) {
+            case MINOR:
+                return "()";
+            case REGULAR:
+                return "(!)";
+            case MAJOR:
+                return "(!!!)";
+            default:
+                return "";
+        }
     }
 }

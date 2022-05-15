@@ -15,5 +15,8 @@ class Application {
         MessageService service = new MessageService();
         service.print(MessageOrder.ASC, Doubling.DISTINCT, message1, message2, message3);
         service.print(MessageOrder.DESC, Doubling.DISTINCT, message1, message2, message3);
+
+
+        message1.hashCode();
     }
 }
