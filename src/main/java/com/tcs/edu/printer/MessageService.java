@@ -13,17 +13,19 @@ import java.util.Objects;
  *
  * @author k.s.savelev
  */
-public class MessageService {
+public class MessageService implements MessageServiceInterface {
+
+    private final SeverityDecorator severity = new SeverityDecorator();
 
     /**
      * Decorating and printing  a message
      *
      * @param messages DTO, message and severity
      */
-    public static void print(Message... messages) {
+    public void print(Message... messages) {
         for (Message current : messages) {
             if (current != null && current.getBody() != null) {
-                System.out.println(TimestampMessageDecorator.decorate(current.getBody() + SeverityDecorator.mapSeverity(current.getSeverity())));
+                System.out.println(TimestampMessageDecorator.decorate(current.getBody() + severity.mapSeverity(current.getSeverity())));
             }
         }
     }
@@ -34,7 +36,7 @@ public class MessageService {
      * @param order    - MessageOrder enum, type order
      * @param messages DTO, message and severity
      */
-    public static void print(MessageOrder order, Message... messages) {
+    public void print(MessageOrder order, Message... messages) {
         if (order == MessageOrder.ASC) {
             for (int counter = messages.length - 1; counter >= 0; counter--) {
                 print(messages[counter]);
@@ -52,7 +54,7 @@ public class MessageService {
      * @param order    - MessageOrder enum, type order
      * @param messages DTO, message and severity
      */
-    public static void print(MessageOrder order, Doubling doubling, Message... messages) {
+    public void print(MessageOrder order, Doubling doubling, Message... messages) {
         Message[] printMessages = new Message[messages.length];
 
         if (doubling == Doubling.DISTINCT) {
@@ -74,11 +76,11 @@ public class MessageService {
      * checking if message have been printed
      *
      * @param checkedMassage - string massage
-     * @param messages       - array of printed messages
+     * @param printMessages  - array of printed messages
      * @return boolean
      */
-    private static boolean checkPrintMessage(String checkedMassage, Message[] messages) {
-        for (Message message : messages) {
+    private boolean checkPrintMessage(String checkedMassage, Message[] printMessages) {
+        for (Message message : printMessages) {
             if (message != null && Objects.equals(message.getBody(), checkedMassage)) {
                 return true;
             }

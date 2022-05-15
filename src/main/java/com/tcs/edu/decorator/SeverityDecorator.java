@@ -5,7 +5,7 @@ package com.tcs.edu.decorator;
  *
  * @author k.s.savelev
  */
-public class SeverityDecorator {
+public class SeverityDecorator implements SeverityDecoratorInterface {
 
     /**
      * map string severity level
@@ -13,7 +13,7 @@ public class SeverityDecorator {
      * @param severity - enum, type severity
      * @return String - level
      */
-    public static String mapSeverity(Severity severity) {
+    public String mapSeverity(Severity severity) {
         switch (severity) {
             case MINOR:
                 return "()";
