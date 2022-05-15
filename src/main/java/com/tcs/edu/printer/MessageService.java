@@ -2,8 +2,6 @@ package com.tcs.edu.printer;
 
 import com.tcs.edu.decorator.Doubling;
 import com.tcs.edu.decorator.MessageOrder;
-import com.tcs.edu.decorator.SeverityDecorator;
-import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 
 import java.util.Objects;
@@ -15,20 +13,16 @@ import java.util.Objects;
  */
 public class MessageService implements MessageServiceInterface {
 
-    private final SeverityDecorator severity = new SeverityDecorator();
-
-    private final TimestampMessageDecorator timestamp = new TimestampMessageDecorator();
+    private final ConsolePrinter consolePrinter = new ConsolePrinter();
 
     /**
-     * Decorating and printing  a message
+     * Printing  a message
      *
      * @param messages DTO, message and severity
      */
     public void print(Message... messages) {
         for (Message current : messages) {
-            if (current != null && current.getBody() != null) {
-                System.out.println(timestamp.massageDecorator(current.getBody() + severity.massageDecorator(current.getSeverity())));
-            }
+            consolePrinter.print(current);
         }
     }
 
