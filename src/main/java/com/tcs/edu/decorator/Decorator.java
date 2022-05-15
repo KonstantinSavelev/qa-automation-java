@@ -33,7 +33,7 @@ public class Decorator implements decoratorInterface {
      * @param severity - enum, type severity
      * @return String - level
      */
-    public String massageDecorator(Severity severity) {
+    public String severityDecorator(Severity severity) {
         switch (severity) {
             case MINOR:
                 return "()";

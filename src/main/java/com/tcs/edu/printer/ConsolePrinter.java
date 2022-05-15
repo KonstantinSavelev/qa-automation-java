@@ -14,6 +14,6 @@ public class ConsolePrinter extends ValidatedService implements Printer {
      */
     public void print(Message message) {
         if (!super.isArgsValid(message)) return;
-        System.out.println(decorator.massageDecorator(message.getBody() + decorator.massageDecorator(message.getSeverity())));
+        System.out.println(decorator.massageDecorator(message.getBody() + decorator.severityDecorator(message.getSeverity())));
     }
 }
