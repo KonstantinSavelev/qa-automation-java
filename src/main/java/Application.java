@@ -17,6 +17,11 @@ class Application {
         service.print(MessageOrder.DESC, Doubling.DISTINCT, message1, message2, message3);
 
 
-        message1.hashCode();
+        var test = message1;
+        System.out.println(message1.hashCode());
+        System.out.println(test.hashCode());
+        System.out.println(message1);
+        System.out.println(message1.equals(message2));
+
     }
 }
