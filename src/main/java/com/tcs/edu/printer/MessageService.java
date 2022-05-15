@@ -17,6 +17,8 @@ public class MessageService implements MessageServiceInterface {
 
     private final SeverityDecorator severity = new SeverityDecorator();
 
+    private final TimestampMessageDecorator timestamp = new TimestampMessageDecorator();
+
     /**
      * Decorating and printing  a message
      *
@@ -25,7 +27,7 @@ public class MessageService implements MessageServiceInterface {
     public void print(Message... messages) {
         for (Message current : messages) {
             if (current != null && current.getBody() != null) {
-                System.out.println(TimestampMessageDecorator.decorate(current.getBody() + severity.mapSeverity(current.getSeverity())));
+                System.out.println(timestamp.massageDecorator(current.getBody() + severity.massageDecorator(current.getSeverity())));
             }
         }
     }

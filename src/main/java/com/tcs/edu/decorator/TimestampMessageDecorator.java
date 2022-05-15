@@ -7,7 +7,7 @@ import java.time.Instant;
  *
  * @author k.s.savelev
  */
-public class TimestampMessageDecorator {
+public class TimestampMessageDecorator implements decoratorInterface {
 
     static Integer PAGE_SIZE = 2;
     static Integer messageCount = 0;
@@ -18,12 +18,16 @@ public class TimestampMessageDecorator {
      * @param message text string
      * @return String
      */
-    public static String decorate(String message) {
+    public String massageDecorator(String message) {
         final var decoratedMessage = String.format("%d %s %s", ++messageCount, Instant.now(), message);
 
         if (messageCount % PAGE_SIZE == 0) {
             return decoratedMessage + "\n---";
         } else
             return decoratedMessage;
+    }
+
+    public String massageDecorator(Severity severity) {
+        return null;
     }
 }
