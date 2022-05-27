@@ -1,11 +1,13 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.decorator.Decorator;
+import com.tcs.edu.decorator.MassageDecorator;
+import com.tcs.edu.decorator.SeverityDecorator;
 import com.tcs.edu.domain.Message;
 
 public class ConsolePrinter extends ValidatedService implements Printer {
 
-    private final Decorator decorator = new Decorator();
+    private final MassageDecorator massageDecorator = new MassageDecorator();
+    private final SeverityDecorator severityDecorator = new SeverityDecorator();
 
     /**
      * Decorating and printing a message
@@ -14,6 +16,6 @@ public class ConsolePrinter extends ValidatedService implements Printer {
      */
     public void print(Message message) {
         if (!super.isArgsValid(message)) return;
-        System.out.println(decorator.massageDecorator(message.getBody() + decorator.severityDecorator(message.getSeverity())));
+        System.out.println(massageDecorator.decorator(message.getBody() + severityDecorator.decorator(message.getSeverity())));
     }
 }
