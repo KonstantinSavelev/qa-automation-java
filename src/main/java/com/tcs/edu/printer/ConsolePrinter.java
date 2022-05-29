@@ -14,8 +14,12 @@ public class ConsolePrinter extends ValidatedService implements Printer {
      *
      * @param message DTO, message and severity
      */
-    public void print(Message message) {
-        if (!super.isArgsValid(message)) return;
+    public void print(Message message) throws LogException {
+        try {
+            super.isArgsValid(message);
+        } catch (IllegalArgumentException e) {
+            throw new LogException("notValidArgMessage", e);
+        }
         System.out.println(massageDecorator.decorator(message.getBody() + severityDecorator.decorator(message.getSeverity())));
     }
 }
