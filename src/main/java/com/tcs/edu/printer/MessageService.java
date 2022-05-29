@@ -1,29 +1,15 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.decorator.Severity;
-import com.tcs.edu.decorator.SeverityDecorator;
-import com.tcs.edu.decorator.TimestampMessageDecorator;
+import com.tcs.edu.decorator.Doubling;
+import com.tcs.edu.decorator.MessageOrder;
+import com.tcs.edu.domain.Message;
 
-/**
- * API
- *
- * @author k.s.savelev
- */
-public class MessageService {
+public interface MessageService {
 
-    /**
-     * Main application method. Decorating and print a message
-     *
-     * @param severity enum
-     * @param message  String
-     * @param messages vararg String
-     */
-    public static void process(Severity severity, String message, String... messages) {
-        final String severityString = SeverityDecorator.mapSeverity(severity);
+    void print(Message... messages);
 
-        ConsolePrinter.print(TimestampMessageDecorator.decorate(message + severityString));
-        for (String current : messages) {
-            ConsolePrinter.print(TimestampMessageDecorator.decorate(current + severityString));
-        }
-    }
+    void print(MessageOrder order, Message... messages);
+
+    void print(MessageOrder order, Doubling doubling, Message... messages);
+
 }
